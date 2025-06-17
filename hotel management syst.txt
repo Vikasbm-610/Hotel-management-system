@@ -1,0 +1,120 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+// Structure to represent a hotel room
+struct Room {
+    int roomNumber;
+    bool isBooked;
+    string guestName;
+};
+
+// Hotel class to manage rooms and bookings
+class Hotel {
+private:
+    vector<Room> rooms;
+
+public:
+    // Constructor to initialize hotel with rooms
+    Hotel(int totalRooms) {
+        for (int i = 1; i <= totalRooms; i++) {
+            rooms.push_back({i, false, ""});
+        }
+    }
+
+    // Function to display available rooms
+    void showAvailableRooms() {
+        cout << "\nAvailable Rooms:\n";
+        for (const auto& room : rooms) {
+            if (!room.isBooked) {
+                cout << "Room " << room.roomNumber << " is available.\n";
+            }
+        }
+    }
+
+    // Function to book a room
+    void bookRoom() {
+        int roomNumber;
+        string name;
+        cout << "\nEnter Room Number to Book: ";
+        cin >> roomNumber;
+
+        if (roomNumber < 1 || roomNumber > rooms.size()) {
+            cout << "Invalid Room Number!\n";
+            return;
+        }
+
+        if (rooms[roomNumber - 1].isBooked) {
+            cout << "Room is already booked!\n";
+            return;
+        }
+
+        cout << "Enter Guest Name: ";
+        cin.ignore();
+        getline(cin, name);
+
+        rooms[roomNumber - 1].isBooked = true;
+        rooms[roomNumber - 1].guestName = name;
+        cout << "Room " << roomNumber << " booked successfully for " << name << "!\n";
+    }
+
+    // Function to checkout from a room
+    void checkoutRoom() {
+        int roomNumber;
+        cout << "\nEnter Room Number to Checkout: ";
+        cin >> roomNumber;
+
+        if (roomNumber < 1 || roomNumber > rooms.size() || !rooms[roomNumber - 1].isBooked) {
+            cout << "Invalid Room Number or Room is not booked!\n";
+            return;
+        }
+
+        cout << "Room " << roomNumber << " checked out from " << rooms[roomNumber - 1].guestName << ".\n";
+        rooms[roomNumber - 1].isBooked = false;
+        rooms[roomNumber - 1].guestName = "";
+    }
+
+    // Function to display all bookings
+    void showBookings() {
+        cout << "\nBooked Rooms:\n";
+        for (const auto& room : rooms) {
+            if (room.isBooked) {
+                cout << "Room " << room.roomNumber << " is booked by " << room.guestName << ".\n";
+            }
+        }
+    }
+};
+
+// Main function
+int main() {
+    int totalRooms;
+    cout << "Enter total number of rooms in the hotel: ";
+    cin >> totalRooms;
+
+    Hotel hotel(totalRooms);
+
+    int choice;
+    do {
+        cout << "\nHotel Booking System\n";
+        cout << "1. Show Available Rooms\n";
+        cout << "2. Book a Room\n";
+        cout << "3. Checkout from Room\n";
+        cout << "4. Show All Bookings\n";
+        cout << "5. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: hotel.showAvailableRooms(); break;
+            case 2: hotel.bookRoom(); break;
+            case 3: hotel.checkoutRoom(); break;
+            case 4: hotel.showBookings(); break;
+            case 5: cout << "Exiting the system...\n"; break;
+            default: cout << "Invalid choice! Please try again.\n";
+        }
+    } while (choice != 5);
+
+    return 0;
+}
