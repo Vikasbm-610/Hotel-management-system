@@ -1,7 +1,7 @@
 🏨 Hotel Management System (C++)
 📌 About
 
-This is a simple console-based C++ project for managing a hotel. It allows hotel staff to book rooms, check in/out customers, and generate bills. It also saves customer data using files.
+This is a simple console-based C++ project for managing a hotel. It allows hotel staff to book rooms, check in/out customers. It also saves customer data using files.
 
 ✅ Features
 
